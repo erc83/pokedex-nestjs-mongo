@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  db:
+    image: mongo:6.0.6
+    restart: always
+    ports:
+      - 27019:27017                 # local:container
+    environment:
+      MONGODB_DATABASE: pokemon-nest-mongo
+    volumes:
+      - ./mongo:/data/db            # persistencia data
+
