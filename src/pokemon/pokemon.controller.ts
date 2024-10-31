@@ -9,6 +9,7 @@ export class PokemonController {
 
   @Post()
   create(@Body() createPokemonDto: CreatePokemonDto) {
+    // return createPokemonDto            // en teoria tambien se puede aqui pero es mejor en el pokemon.service.ts
     return this.pokemonService.create(createPokemonDto);
   }
 
