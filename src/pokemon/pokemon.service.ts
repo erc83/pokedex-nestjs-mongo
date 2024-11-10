@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { isValidObjectId, Model } from 'mongoose';
 import { Pokemon } from './entities/pokemon.entity';
 
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
@@ -44,9 +44,15 @@ export class PokemonService {
       pokemon = await this.pokemonModel.findOne({ num: id_term })
     }
 
-    // MongoId
+    // MongoId  // hacer verificacion que es un mmongoID
+    if( isValidObjectId( id_term ) ) {
+      pokemon = await this.pokemonModel.findById( id_term )
+    }
 
     // name
+    if( !pokemon ) {
+      pokemon = await this.pokemonModel.findOne({ name: id_term.toLowerCase().trim() })
+    }
 
     // Si no existe el pokemon
     if( !pokemon ) throw new NotFoundException(`Pokemon with id, name or num "${ id_term }" not found`)
