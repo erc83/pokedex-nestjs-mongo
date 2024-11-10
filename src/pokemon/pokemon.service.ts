@@ -77,8 +77,13 @@ export class PokemonService {
 
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} pokemon`;
+  async remove(id: string ) {
+
+    const pokemon = await this.findOne( id )      // si no encuentra un pokemon ya arroja el error y no continua
+    // this.pokemonModel.findByIdAndDelete( id )  // hay que asegurarse que sea un mongo ID
+
+    await pokemon.deleteOne()
+
   }
 
   // evitamos codigo duplicado en la app
