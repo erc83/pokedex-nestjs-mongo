@@ -3,6 +3,7 @@ import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path' // en node
 import { PokemonModule } from './pokemon/pokemon.module'
 import { MongooseModule } from '@nestjs/mongoose'
+import { CommonModule } from './common/common.module';
 
 
 @Module({
@@ -12,7 +13,7 @@ import { MongooseModule } from '@nestjs/mongoose'
     }),
 
     MongooseModule.forRoot('mongodb://localhost:27019/nest-pokemon'), // unique forRoot
-    PokemonModule
+    PokemonModule, CommonModule
   ],
 })
 export class AppModule {}
