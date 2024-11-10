@@ -45,7 +45,7 @@ export class PokemonService {
     }
 
     // MongoId  // hacer verificacion que es un mmongoID
-    if( isValidObjectId( id_term ) ) {
+    if( !pokemon && isValidObjectId( id_term ) ) {            // si no hay pokemon hace la busqueda por ID de mongo
       pokemon = await this.pokemonModel.findById( id_term )
     }
 
