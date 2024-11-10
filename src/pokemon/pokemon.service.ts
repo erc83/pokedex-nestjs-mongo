@@ -84,7 +84,8 @@ export class PokemonService {
 
     //await pokemon.deleteOne()
 
-    return { id }
+    const result = this.pokemonModel.findByIdAndDelete( id )
+    return result
   }
 
   // evitamos codigo duplicado en la app
