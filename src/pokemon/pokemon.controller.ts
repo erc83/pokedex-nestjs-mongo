@@ -8,7 +8,7 @@ export class PokemonController {
   constructor(private readonly pokemonService: PokemonService) {}
 
   @Post()
-  // @HttpCode( 200 )                      // decorador para manejar el codigo de error y personalizar
+  // @HttpCode( 200 )                      // decorador para manejar el codigo de error y personalizar el codigo de error
   // @HttpCode( HttpStatus.OK )           // 200
   // @HttpCode( HttpStatus.UNAUTHORIZED )    // 401
   create(@Body() createPokemonDto: CreatePokemonDto) {
@@ -21,9 +21,9 @@ export class PokemonController {
     return this.pokemonService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.pokemonService.findOne(+id);
+  @Get(':id_term')
+  findOne(@Param('id_term') id_term: string) {
+    return this.pokemonService.findOne( id_term );
   }
 
   @Patch(':id')
