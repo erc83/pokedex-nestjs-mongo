@@ -60,8 +60,19 @@ export class PokemonService {
     return pokemon
   }
 
-  update(id: number, updatePokemonDto: UpdatePokemonDto) {
-    return `This action updates a #${id} pokemon`;
+  async update( id_term: string, updatePokemonDto: UpdatePokemonDto ) {
+    // no se puede actulizar un pokemon si no existe
+    const pokemon = await this.findOne( id_term )  // reutilizamos la logica
+    
+    // Si hay porkemon recibimos el objeto de mongoose, donde tenemos los metodos overwrite populate remove replace entre otros
+    if ( updatePokemonDto.name ) {
+      updatePokemonDto.name = updatePokemonDto.name.toLowerCase()       // si viene va estar en minuscula
+    }
+
+    const updatedPokemon = await pokemon.updateOne( updatePokemonDto, { new: true } )          // sin el new toma el viejo objeto
+    //await pokemon.save()        // en caso de alguna modificacion 
+
+    return updatedPokemon;
   }
 
   remove(id: number) {
