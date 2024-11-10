@@ -69,10 +69,9 @@ export class PokemonService {
       updatePokemonDto.name = updatePokemonDto.name.toLowerCase()       // si viene va estar en minuscula
     }
 
-    const updatedPokemon = await pokemon.updateOne( updatePokemonDto, { new: true } )          // sin el new toma el viejo objeto
-    //await pokemon.save()        // en caso de alguna modificacion 
+    await pokemon.updateOne( updatePokemonDto )
 
-    return updatedPokemon;
+    return { ...pokemon.toJSON(), ...updatePokemonDto }
   }
 
   remove(id: number) {
