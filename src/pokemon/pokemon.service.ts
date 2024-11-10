@@ -24,11 +24,7 @@ export class PokemonService {
   
         return pokemon
       } catch (error) {
-        if ( error.code === 11000 ) {
-          throw new BadRequestException(`Pokemon exists in db ${ JSON.stringify( error.keyValue )}`)
-        }
-        console.log(error)
-        throw new InternalServerErrorException(`Can't create Pokemon - Check server logs`)
+        this.handleExceptionsError( error )
       }
   }
 
@@ -74,11 +70,8 @@ export class PokemonService {
   
       return { ...pokemon.toJSON(), ...updatePokemonDto }
     } catch (error) {
-      if ( error.code === 11000 ) {
-        throw new BadRequestException(`Pokemon exists in db ${ JSON.stringify( error.keyValue )}`)
-      }
-      //console.log(error)
-      throw new InternalServerErrorException(`Can't updated Pokemon - Check server logs`)
+      // call methodo private
+      this.handleExceptionsError( error )
     }
 
 
@@ -87,4 +80,15 @@ export class PokemonService {
   remove(id: number) {
     return `This action removes a #${id} pokemon`;
   }
+
+  // evitamos codigo duplicado en la app
+  private handleExceptionsError ( error: any ) {      // siempre regresa un error
+    if ( error.code === 11000 ) {
+      throw new BadRequestException(`Pokemon exists in db ${ JSON.stringify( error.keyValue )}`)
+    }
+    console.log(error)
+    throw new InternalServerErrorException(`Can't updated Pokemon - Check server logs`)
+  }
+
+
 }
