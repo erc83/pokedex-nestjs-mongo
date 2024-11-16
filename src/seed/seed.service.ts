@@ -18,22 +18,30 @@ export class SeedService {
 
   async executeSeed() {
 
+    await this.pokemonModel.deleteMany({}) // limpieza de database
+
     const { data } = await this.axios.get<PokeResponse>('https://pokeapi.co/api/v2/pokemon?limit=650')
 
+    const insertPromiseArray = []
+
     // manejo de data
-    data.results.forEach(async( { name, url }) => {
+    data.results.forEach(( { name, url }) => {
 
       const segments = url.split('/')
       const num = +segments[ segments.length - 2 ]
-      
-      
+    
       //console.log({ name, num })
-      const pokemon = await this.pokemonModel.create({ name, num })
+      //const pokemon =  this.pokemonModel.create({ name, num })
+      insertPromiseArray.push(
+        this.pokemonModel.create({ name, num })
+      )
 
     })
 
     //return data.results    // copiar la respuesta de data en postman y crear la interface PokeResponse
     // return data.        -> count, next, previous, result
+    
+    await Promise.all( insertPromiseArray )
     return 'Seed Execute'
   }
 }
