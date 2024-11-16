@@ -22,7 +22,7 @@ export class SeedService {
 
     const { data } = await this.axios.get<PokeResponse>('https://pokeapi.co/api/v2/pokemon?limit=650')
 
-    const insertPromiseArray = []
+    const pokemonToInsert: { name: string, num: number }[]  = []
 
     // manejo de data
     data.results.forEach(( { name, url }) => {
@@ -32,16 +32,14 @@ export class SeedService {
     
       //console.log({ name, num })
       //const pokemon =  this.pokemonModel.create({ name, num })
-      insertPromiseArray.push(
-        this.pokemonModel.create({ name, num })
-      )
+      pokemonToInsert.push({ name, num })   // [{ name: bulbasaur, no: 1}]
 
     })
 
     //return data.results    // copiar la respuesta de data en postman y crear la interface PokeResponse
     // return data.        -> count, next, previous, result
     
-    await Promise.all( insertPromiseArray )
+    await this.pokemonModel.insertMany( pokemonToInsert )
     return 'Seed Execute'
   }
 }
