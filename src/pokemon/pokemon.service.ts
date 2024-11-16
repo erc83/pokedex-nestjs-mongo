@@ -105,5 +105,11 @@ export class PokemonService {
     throw new InternalServerErrorException(`Can't updated Pokemon - Check server logs`)
   }
 
+  fillPokemonWithSeedData() {
+    
+  }
+
+
+
 
 }
