@@ -33,6 +33,17 @@ docker-compose up -d
 mongodb://localhost:27019/
 ```
 
+## 5. Reconstruir la base de datos con la semilla
+
+```
+http://localhost:3000/api/v2/seed
+```
+
+
+## Stack usado
+* MongoDB
+* nest js
+
 
 
 ## Compile and run the project
