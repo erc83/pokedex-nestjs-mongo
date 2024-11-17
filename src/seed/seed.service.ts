@@ -1,18 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import axios , { AxiosInstance } from 'axios'
+// import axios , { AxiosInstance } from 'axios'     // se van por la creacion del adapter de axios
 import { PokeResponse } from './interface/poke-response.interface';
 import { InjectModel } from '@nestjs/mongoose'
 import { Pokemon } from 'src/pokemon/entities/pokemon.entity';
 import { Model } from 'mongoose'
+import { AxiosAdapter } from 'src/common/http-adapters/axios.adapter';
 
 @Injectable()
 export class SeedService {
 
-  private readonly axios: AxiosInstance = axios //crea visualmente que es una dependencia de mi servicio
+   //crea visualmente que es una dependencia de mi servicio
 
   constructor(
     @InjectModel( Pokemon.name )    //InjecModel de @nestjs/mongoose; Pokemon de entity
-    private readonly pokemonModel: Model<Pokemon> // Model de mongoose
+    private readonly pokemonModel: Model<Pokemon>, // Model de mongoose
+
+    private readonly httpAdapter: AxiosAdapter,
   ) {}
 
 
@@ -20,7 +23,8 @@ export class SeedService {
 
     await this.pokemonModel.deleteMany({}) // limpieza de database
 
-    const { data } = await this.axios.get<PokeResponse>('https://pokeapi.co/api/v2/pokemon?limit=650')
+    // se desestructuro la data en el axios.adapter.ts
+    const data = await this.httpAdapter.get<PokeResponse>('https://pokeapi.co/api/v2/pokemon?limit=650')
 
     const pokemonToInsert: { name: string, num: number }[]  = []
 
