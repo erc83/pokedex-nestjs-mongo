@@ -30,6 +30,8 @@ export class PokemonService {
 
   findAll() {
     return this.pokemonModel.find()
+      .limit(5)           // trae 5
+      .skip(10)           // salta los 10 primeros
   }
 
   async findOne( id_term: string) {
