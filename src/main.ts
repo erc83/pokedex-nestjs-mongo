@@ -11,9 +11,12 @@ async function bootstrap() {
     new ValidationPipe({            // tiene muchas propiedades
       whitelist: true,              // deja pasar los valores de la data que se estan esperando
       forbidNonWhitelisted: true,   // envia un mensaje por cada valor agregado que no se necesita
+      transform: true,                    // para transformar la data de los Dto
+      transformOptions: {
+        enableImplicitConversion: true,   //
+      },
     })
   )
-
 
   await app.listen(process.env.PORT ?? 3000);
 }
