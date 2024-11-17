@@ -6,15 +6,21 @@ import { Pokemon } from './entities/pokemon.entity';
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class PokemonService {
 
   constructor(
     @InjectModel( Pokemon.name )    //necesita el nombre del modelo
-    private readonly pokemonModel: Model<Pokemon>
+    private readonly pokemonModel: Model<Pokemon>,
+  
+    private readonly configService: ConfigService,   // cuando no puede resolver
   ){
-    console.log(process.env.DEFAULT_LIMIT)
+    console.log(process.env.DEFAULT_LIMIT)          // obteniendo directamente 
+    //console.log( configService.get('defaultLimit')) // si lo ejecutamos por aqui obtenemos el 7 de env.config.ts
+    const defaultLimit = configService.get<number>('defaultLimit') // lo podemos tratar como number
+    console.log( {defaultLimit} )
   }
 
   // como es asincrona la insercion a la DB colocamos el async
@@ -34,7 +40,8 @@ export class PokemonService {
   findAll( paginationDto: PaginationDto ) {
 
     // const { limit = +process.env.DEFAULT_LIMIT, offset = 0 } = paginationDto 
-    const { limit = 5, offset = 0 } = paginationDto 
+    // const { limit = 5, offset = 0 } = paginationDto 
+    const { limit = this.configService.get<number>('defaultLimit') , offset = 0 } = paginationDto 
 
     return this.pokemonModel.find()
       .limit( limit )           // si no viene por parametro se agrega 10
