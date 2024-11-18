@@ -19,12 +19,12 @@ export class PokemonService {
   
     private readonly configService: ConfigService,   // cuando no puede resolver
   ){
-    console.log(process.env.DEFAULT_LIMIT)          // obteniendo directamente 
+    console.log(process.env.DEFAULT_LIMIT)          // obteniendo directamente como string 
     //console.log( configService.get('defaultLimit')) // si lo ejecutamos por aqui obtenemos el 7 de env.config.ts
     //const defaultLimit = configService.get<number>('defaultLimit') // lo podemos tratar como number
     
     this.defaultLimit = configService.get<number>('defaultLimit')
-    console.log( this.defaultLimit = configService.get<number>('defaultLimit') )
+    console.log( {defaultLimit: configService.get<number>('defaultLimit')} )
   }
 
   // como es asincrona la insercion a la DB colocamos el async

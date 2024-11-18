@@ -5,6 +5,6 @@ export const envConfiguration = () => ({
     environment: process.env.NODE_ENV || 'dev',             // en caso que no este sera desarrollo
     mongodb: process.env.MONGO_DB, 
     port: process.env.PORT || 3001, 
-    defaultLimit: process.env.DEFAULT_LIMIT || 7, 
+    defaultLimit: +process.env.DEFAULT_LIMIT || 7,          // se convierte a number con el + 
 })
 

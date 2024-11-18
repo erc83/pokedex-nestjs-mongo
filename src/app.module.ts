@@ -7,6 +7,7 @@ import { CommonModule } from './common/common.module';
 import { SeedModule } from './seed/seed.module';
 import { ConfigModule } from '@nestjs/config'
 import { envConfiguration } from './config/env.config'
+import { JoiValidationSchema } from './config/joi.schema.validation'
 
 
 @Module({
@@ -15,6 +16,8 @@ import { envConfiguration } from './config/env.config'
     ConfigModule.forRoot({
       //envFilePath                 // paso del archivo de env si lo queremos leer de otro lugar
       load: [ envConfiguration ],   // cargamos desde env.config
+
+      validationSchema: JoiValidationSchema,
     }),
 
     ServeStaticModule.forRoot({

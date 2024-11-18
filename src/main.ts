@@ -18,6 +18,8 @@ async function bootstrap() {
     })
   )
 
+  
   await app.listen(process.env.PORT ?? 3000);
+  console.log(`App running on port: ${process.env.PORT}`) // no se esta utilizando EnvConfiguration esta fuera del building block
 }
 bootstrap();
