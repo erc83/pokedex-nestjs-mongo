@@ -1,0 +1,10 @@
+
+# los archivos que no quiero que se copien
+
+dist/
+node_modules/
+.gitignore
+
+.git/
+
+
